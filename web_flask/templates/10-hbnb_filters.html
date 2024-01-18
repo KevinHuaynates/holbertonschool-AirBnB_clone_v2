@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}" type="text/css">
+    </HEAD>
+    <BODY>
+        <header class="full">
+            <div class="container">
+                <div class="hbnb_logo">
+                    <a href="/">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="HBNB Logo">
+                    </a>
+                </div>
+                <nav>
+                    <ul class="nav_list">
+                        <li class="nav_link"><a href="#">Places to stay</a></li>
+                        <li class="nav_link"><a href="#">Host your home</a></li>
+                        <li class="nav_link"><a href="#">Host an experience</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section class="filters">
+            <div class="container">
+                <div class="popover">
+                    <H3 class="popover-title">States</H3>
+                    <div class="popover-content">
+                        {% for state in states %}
+                            <div class="filter checkbox">
+                                <label>
+                                    <input type="checkbox" name="state" class="input-checkbox" id="{{ state.id }}">
+                                    {{ state.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <H3 class="popover-title">Amenities</H3>
+                    <div class="popover-content">
+                        {% for amenity in amenities %}
+                            <div class="filter checkbox">
+                                <label>
+                                    <input type="checkbox" name="amenity" class="input-checkbox" id="{{ amenity.id }}">
+                                    {{ amenity.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="full">
+            <div class="container">
+                <p class="footer_desc">
+                    © 2024 HBNB - A Holberton School project.
+                </p>
+            </div>
+        </footer>
+    </BODY>
+</HTML>
+
