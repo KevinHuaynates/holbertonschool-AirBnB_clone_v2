@@ -15,16 +15,11 @@ class BaseModel:
             self.updated_at = datetime.now()
             storage.new(self)
         else:
-            if 'created_at' not in kwargs:
-                kwargs['created_at'] = datetime.now()
-
-            if 'updated_at' in kwargs:
-                kwargs['updated_at'] = datetime.strptime(
-                    kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f'
-                )
-
-            kwargs.pop('__class__', None)
-
+            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            del kwargs['__class__']
             self.__dict__.update(kwargs)
 
     def __str__(self):
@@ -47,4 +42,3 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
-
