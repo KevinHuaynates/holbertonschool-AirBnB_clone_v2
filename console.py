@@ -74,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] == '{' and pline[-1] =='}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -120,36 +120,28 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
+        # Parse the command arguments
         args = arg.split()
-        class_name = args[0]
 
-        if class_name not in HBNBCommand.classes:
+        class_name = args[0]
+        params = ' '.join(args[1:])
+
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
 
-        # Extract parameters from the command
-        params_match = re.findall(r'(\S+?=".*?")', arg)
-        params_dict = {}
+        # Replace underscores with spaces in the params
+        params = params.replace('_', ' ')
 
-        for param in params_match:
-            key, value = param.split("=")
-            # Handle string values
-            if value.startswith('"') and value.endswith('"'):
-                value = value[1:-1].replace('_', ' ').replace('\\"', '"')
-            # Handle float values
-            elif '.' in value:
-                value = float(value)
-            # Handle integer values
-            elif value.isdigit():
-                value = int(value)
-            else:
-                print(f"** invalid syntax for param: {param} **")
-                return
+        # Convert params to a dictionary
+        try:
+            params_dict = eval(params)
+        except Exception as e:
+            print("** invalid syntax for params **")
+            return
 
-            params_dict[key] = value
-
-        # Create an instance of the specified class with the given params
-        new_instance = HBNBCommand.classes[class_name](**params_dict)
+        # Create a new instance of the specified class with the given params
+        new_instance = self.classes[class_name](**params_dict)
         new_instance.save()
         print(new_instance.id)
 
@@ -346,6 +338,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
