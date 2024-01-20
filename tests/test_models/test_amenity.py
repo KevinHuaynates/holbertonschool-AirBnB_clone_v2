@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ """
-from tests.test_models.test_base_model import TestBaseModel
+import unittest
 from models.amenity import Amenity
+from tests.test_models.test_base_model import TestBaseModel
 
 
 class TestAmenity(TestBaseModel):
@@ -17,3 +18,7 @@ class TestAmenity(TestBaseModel):
         """ """
         new = self.value()
         self.assertEqual(type(new.name), str)
+
+
+if __name__ == '__main__':
+    unittest.main()
