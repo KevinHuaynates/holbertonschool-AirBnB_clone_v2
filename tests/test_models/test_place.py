@@ -67,3 +67,10 @@ class test_Place(test_basemodel):
         """ """
         new = self.value()
         self.assertEqual(type(new.amenity_ids), list)
+
+
+    def test_updated_at(self):
+        """ """
+        new = self.value()
+        self.assertFalse(new.created_at == new.updated_at)
+

@@ -1,3 +1,5 @@
-from sqlalchemy.ext.declarative import declarative_base
+import unittest
 
-Base = declarative_base()
+@unittest.skipIf(condition, reason)
+class YourTestCases(unittest.TestCase):
+    # Tus casos de prueba aquí
